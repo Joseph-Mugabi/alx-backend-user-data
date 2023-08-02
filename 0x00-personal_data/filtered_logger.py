@@ -37,3 +37,14 @@ class RedactingFormatter(logging.Formatter):
         """format"""
         return filter_datum(self.fields, self.REDACTION,
                             super().format(record), self.SEPARATOR)
+
+def get_logger() -> logging.Logger:
+    """ returns logger user data"""
+    logger = logging.getLogger('user_data')
+    logger.setLevel(logging.INFO)
+    Logger.propagate = False
+    formatter = RedactingFormatter(list(PII_FIELDS))
+    st_handler = logging.StreamHandler()
+    st_handler.setFormatter(formatter)
+    logger.addHandler(st_handler)
+    return logger
