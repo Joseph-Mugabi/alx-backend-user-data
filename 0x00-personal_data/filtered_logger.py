@@ -58,4 +58,4 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_host = os.environ.get('PERSONAL_DATA_DB_HOST')
     db_name = os.environ.get('PERSONAL_DATA_DB_NAME')
     return mysql.connector.connect(user=db_user, password=db_pass,
-                                   host=db_host, database=db_name) 
+                                   host=db_host, database=db_name)
