@@ -21,3 +21,23 @@ def _generate_uuid() -> str:
     """string representtion of a new uuid is returned"""
     UUID = uuid4
     return str(UUID)
+
+
+class Auth:
+    """Auth class to interact with the authentication database.
+    """
+
+    def __init__(self):
+        self._db = DB()
+
+    def register_user(self, email: str, password: str) -> User:
+        """registering a user in database"""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            hashed_password = _hash_password(password)
+            user = self._db.add_user(email, hashed_password)
+            return user
+
+        else:
+            raise ValueError(f'user {email} aready exists')
